@@ -1,25 +1,55 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect , useState} from 'react' 
+
+
+import { Container, Box , Grid,  Card  } from '@material-ui/core'
+
+
+import CreateUserOnInit from './functions/CreateUserOnInit'
+ 
+import SingleChat from './components/SingleChat';
+import UserProfile from './components/UserProfile';
 
 function App() {
+
+  const [user, setUser] = useState({
+    id: '', 
+    color: '#fff',
+    contrast: '#fff'
+  }) 
+
+ 
+  useEffect( () => {  
+    userCheck() 
+    // eslint-disable-next-line
+  }, [])
+ 
+
+  const userCheck = () => {
+    const userValue = CreateUserOnInit() 
+    setUser(userValue)
+     
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Container>
+      <Box my={'30px'} >
+          <Grid container spacing={3} > 
+            <Grid item xs={12} md={3}>
+              <Card >
+                <Box p={3}>
+                  <UserProfile user={user} />
+                </Box>
+              </Card>
+            </Grid>
+            <Grid item xs={12} md={9}  >
+                <Card>  
+                    <SingleChat user={user} /> 
+                </Card>
+            </Grid>
+          </Grid>
+      </Box>
+    </Container>
+  ); 
 }
 
 export default App;
